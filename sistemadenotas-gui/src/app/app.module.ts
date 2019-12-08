@@ -4,6 +4,7 @@ import { RouterModule, Routes} from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TurmasModule } from './turmas.module';
 import { RelatorioModule } from './relatorio/relatorio.module';
 
 @NgModule({
@@ -14,6 +15,7 @@ import { RelatorioModule } from './relatorio/relatorio.module';
     BrowserModule,
     AppRoutingModule,
     RelatorioModule,
+    TurmasModule
   ],
   providers: [],
   bootstrap: [AppComponent]
