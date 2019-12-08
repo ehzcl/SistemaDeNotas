@@ -4,20 +4,16 @@ import { RouterModule, Routes} from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-const appRoutes : Routes = [
-];
+import { RelatorioModule } from './relatorio/relatorio.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule ,
-    RouterModule.forRoot(
-      appRoutes
-    )
+    AppRoutingModule,
+    RelatorioModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
