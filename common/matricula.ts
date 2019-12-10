@@ -1,3 +1,6 @@
+import { Avaliacao } from './avaliacao';
+import { Aluno } from './aluno';
+
 export class Matricula {
     aluno: Aluno;
     avaliacoes: Array<Avaliacao>;
@@ -6,9 +9,9 @@ export class Matricula {
     mediaFinal: number;
 
     constructor(){
-        this.avaliacoes = [Avaliacao('requisitos','MA')];
+        this.avaliacoes = [new Avaliacao('requisitos','MA')];
         this.autoAvaliacoes = [];
-        this.aluno = new Aluno();
+        this.aluno = null;
     }
 
     adicionarAvaliacao(avaliacao: Avaliacao): void {

@@ -1,7 +1,10 @@
+import { Turma } from '../../../../common/turma';
+import { Aluno } from '../../../../common/aluno';
+import { Avaliacao } from '../../../../common/avaliacao';
+
 export class Relatorio {
 
-  test_number: number;
-  resultado : object;
+  resultado : Relatorio;
 
   aprovadosMedia : number;
   final : number;
@@ -9,40 +12,74 @@ export class Relatorio {
   reprovadosNota : number;
   aprovados : number;
   totalAlunos : number;
+  erro : string;
 
-  constructor (test: number) {
-    this.test_number = test;
+  limparRelatorio() {
+    this.aprovadosMedia = 0;
+    this.final = 0;
+    this.reprovadosFalta = 0;
+    this.reprovadosNota = 0;
+    this.aprovados = 0;
+    this.totalAlunos = 0;
   }
 
-  selectTest(test:number) : void{
-    this.test_number = test;
+  concluirRelatorio() : Relatorio {
+    return this;
   }
 
-  gerarRelatorio() : object {
-    if(this.test_number == 0 || this.test_number == 2) {
-      this.aprovadosMedia = 1;
-      this.final = 1;
-      this.reprovadosFalta = 0;
-      this.reprovadosNota = 1;
-      this.aprovados = 1;
-      this.totalAlunos = 2;
+  constructor () {
+    this.limparRelatorio();
+  }
 
-    } else if(this.test_number == 1) {
-      this.resultado = {erro: "não foi possível gerar o relatório pois há metas não atribuídas"};
-      return this.resultado;
-    } else {
-      this.resultado = {erro: "não foi possível gerar relatório pois não há turmas criadas a mais de 1 ano"};
-      return this.resultado;
+  erroMetaNaoAtribuida() : Relatorio {
+    this.erro = "não foi possível gerar o relatório pois há metas não atribuídas";
+    return this;
+  }
+
+  relatorioTurma(turma : Turma) : Relatorio {
+    this.limparRelatorio();
+    this.totalAlunos = turma.matriculas.length;
+    let numeroMetas = turma.metas.length;
+    this.erro = null;
+    
+    for(let i=0; i < turma.matriculas.length; i++) {
+      if(turma.matriculas[i].media == null) {
+        this.erroMetaNaoAtribuida();
+      }
+      if(turma.matriculas[i].media >= 7) {
+        this.aprovadosMedia++;
+      } else if(turma.matriculas[i].media < 3) {
+        this.reprovadosNota++;
+      } else {
+        this.final++;
+        if(turma.matriculas[i].mediaFinal >= 5) {
+          this.aprovados++;
+        }
+      }
     }
+    return this.concluirRelatorio();
+  }
 
-    this.resultado = {
-      aprovadosMedia: this.aprovadosMedia,
-      final: this.final,
-      reprovadosFalta: this.reprovadosFalta,
-      reprovadosNota: this.reprovadosNota,
-      aprovados: this.aprovados,
-      totalAlunos: this.totalAlunos
-    };
-    return this.resultado;
+  get ReprovadosNota() : number {
+    return this.reprovadosNota;
+  }
+
+  get AprovadosMedia() : number {
+    return this.aprovadosMedia;
+  }
+
+  get ReprovadosFalta() : number {
+    return this.reprovadosFalta;
+  }
+  get Aprovados() : number {
+    return this.aprovados;
+  }
+
+  get Final() : number {
+    return this.final;
+  }
+
+  get TotalAlunos() : number {
+    return this.totalAlunos;
   }
 }

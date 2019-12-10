@@ -1,3 +1,5 @@
+import { Matricula } from './matricula';
+
 export class Turma {
     nome: String;
     materia: String;
@@ -6,7 +8,7 @@ export class Turma {
 
     constructor() {
       this.nome = 'ess';
-      this.materia =
+      this.materia = "ess";
       this.matriculas.push(new Matricula());
       this.metas.push('requisitos');
     }
